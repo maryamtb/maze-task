@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <h1>Maze Task: Depth First Search</h1>
+    <h1>Random Maze Solution Generator</h1>
     <button @click="solveMaze(startPoint, endPoint)">Generate Maze</button> 
   </div>
 </template>
@@ -33,63 +33,48 @@ export default {
         [0],[0]
       ],
       endPoint: [
-        [4],[4]
+        [3],[3]
       ]
     }
   },
   methods: {
 
+    getNeighbor() {
+      // 1. start with right then bottom (i++ & j++), check for borders/edges (maybe create function for that) & make it only 1 step
+      // 2. if free return location of the free cell
+    },
+
     movePoint() {
-      let _this = this
-      switch(expression) {
-        case adjacentRight = 'blocked':
-          _moveLeft() || _moveDown() || _moveUp()
-          break;
-        case adjacentDown = 'blocked':
-          _moveLeft() || _moveRight() || _moveUp()
-          break;
-        case adjacentUp = 'blocked':
-          _moveLeft() || _moveRight() || _moveDown()
-          break;
-        case adjacentLeft = 'blocked':
-          _moveDown() || _moveRight() || _moveUp()
-          break;
-      default:
+      // 1. check adjacent value by calling getNeighbor()
+      // 2. set this.movingPoint = 'free' location (from getNeighbor())
+      // 3. call solveMaze() again
+      // 4. once above is complete, create stackList() => lists all moved position into a 2d array + drawLine() => sets background color for that list to red
+    },
+
+    arraysEqual([a], [b]) {
+      if (a === b) return true;
+
+      for (var i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return false;
       }
-    },
-
-    moveDown() {
-      return this.j--;
-    },
-
-    moveRight() {
-      return this.i++;
-    },
-
-    moveLeft() {
-      return this.i--;
-    },
-
-    moveUp() {
-      return this.j--;
+      return true;
     },
 
     solveMaze(startPoint, endPoint) {
       let _this = this;
-
-      for(var i=0; i <= 1; i++) {
-        for (var j=0; j <= 1; j++) {
-          if (startPoint == this.startPoint && endPoint == this.endPoint) {
-            this.movingPoint = startPoint;
-            _this.movePoint()
-
-          } else if (this.movingPoint == this.endPoint) {
-            console.log('Maze solved');
+      for (var i=0; i < this.maze.length; i++) {
+        var mazeColumn = this.maze[i];
+        for (var j=0; j < mazeColumn.length; j++) {
+          if (_this.arraysEqual(startPoint, endPoint)) {
+            console.log('maze solved');
+          } else {
+            console.log('move()')
           }
-          
         }
       }
     }
+
+
   }
 }
 </script>
