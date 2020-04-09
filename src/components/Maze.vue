@@ -40,20 +40,54 @@ export default {
   methods: {
 
     getNeighbor() {
-      // 1. start with right then bottom (i++ & j++), check for borders/edges (maybe create function for that) & make it only 1 step
-      // 2. if free return location of the free cell
+      let _this = this;
+
+      var i = 0
+      var j = 0
+      if (this.maze[i][j+1] === 'blocked' && this.maze[i]-1 < this.width && this.maze[j]-1 < this.height) { 
+        console.log('blocked');
+        this.movingPoint = [i+1,j]
+        console.log(this.movingPoint)
+        return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
+
+      } else if (this.maze[i+1][j] === 'free' && this.maze[i]-1 < this.width && this.maze[j]-1 < this.height) { 
+
+        console.log('free');
+        this.movingPoint = [i,j+1]
+        console.log(this.movingPoint)
+        return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
+
+      } else if (this.maze[i]-1 === this.width) {
+        // this.movingPoint = [i-1,j]
+        console.log('out of range x-axis')
+        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
+      } else if (this.maze[i]-1 === this.height) {
+        // this.movingPoint = [i,j-1]
+        console.log('out of range y-axis')
+        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
+      } else {
+        console.log('winner')
+        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
+      }
+
     },
 
     movePoint() {
+      // this.movingPoint = this.startPoint;
+      let _this = this;
+      // 0. check if on edge
       // 1. check adjacent value by calling getNeighbor()
       // 2. set this.movingPoint = 'free' location (from getNeighbor())
       // 3. call solveMaze() again
       // 4. once above is complete, create stackList() => lists all moved position into a 2d array + drawLine() => sets background color for that list to red
+      
+      _this.getNeighbor()
+
+
     },
 
     arraysEqual([a], [b]) {
       if (a === b) return true;
-
       for (var i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) return false;
       }
@@ -65,11 +99,14 @@ export default {
       for (var i=0; i < this.maze.length; i++) {
         var mazeColumn = this.maze[i];
         for (var j=0; j < mazeColumn.length; j++) {
-          if (_this.arraysEqual(startPoint, endPoint)) {
+          if (_this.arraysEqual([startPoint], [endPoint])) {
             console.log('maze solved');
           } else {
+            // this.movingPoint = startPoint;
+            _this.movePoint();
             console.log('move()')
           }
+          return [this.movingPoint]
         }
       }
     }
