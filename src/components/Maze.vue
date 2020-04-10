@@ -27,10 +27,10 @@ export default {
       height: [4],
       // size: [4].concat([4]),
       maze: [
-        [0,2,0,0],
+        [0,0,2,0],
         [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,2]
+        [2,2,0,0],
+        [0,2,0,2]
       ],
       // maze: [
       //   ['free','blocked','blocked','blocked'],
@@ -58,20 +58,46 @@ export default {
     movePoint(startPoint) {
 
       let _this = this;
+      var i = 0 
+      var j = 0
+      let right = this.maze[i][j+1]
+      let down = this.maze[i+1][j]
+
 
       // 1. check adjacent value by calling getNeighbor()
       // 2. set this.movingPoint = 'free' location (from getNeighbor())
       // 3. call solveMaze() again
       // 4. once above is complete, create stackList() => lists all moved position into a 2d array + drawLine() => sets background color for that list to red
-      // if (this.movingPoint < this.width && this.movingPoint < this.height) {
 
-      _this.getNeighbor(startPoint)
-    
+
+      switch (_this.getNeighbor(startPoint)) {
+        case right:
+          startPoint = startPoint.push([i,j+1])
+
+          console.log(startPoint)
+          // _this.solveMaze(startPoint, this.endPoint)
+          break;
+        case down:
+          this.startPoint = startPoint.push([i+1,j])
+          console.log(this.startPoint)
+          // _this.solveMaze(startPoint, this.endPoint)
+          break;
+      //   case left: 
+      //     _this.getNeighbor(startPoint)
+      //     break;
+      //   case up: 
+      //     _this.getNeighbor(startPoint)
+      //     break;
+        default:
+          //  _this.solveMaze(startPoint, this.endPoint)
+          // console.log(startPoint)
+          break;
+      // }
+      }
     },
 
-    getNeighbor(startPoint) {
-        // let _this = this;
-
+    getNeighbor() {
+      // let _this = this;
       var i = 0
       var j = 0
       var width = this.width
@@ -79,28 +105,25 @@ export default {
 
       var maze = this.maze
       let right = maze[i][j+1]
-      // var down = maze[i][j+1]
+      let down = maze[i+1][j]
       // var left = maze[i][j-1]
       // var up = maze[i-1][j]
+      // var right = [maze[i][j], maze[i][j]+1]
+      // var down = [maze[i][j]+1, maze[i][j]]
 
+      // console.log([maze[i][j], maze[i][j]+1])
+      // console.log([maze[i][j]+1, maze[i][j]])
 
-      for (i=0; i < width-1; i++) { 
-        for (j=0; j < height-1; j++) {
-          if (right === 0 && right < maze[i].length-1 && maze[j].length-1) {
-            startPoint = startPoint.push([i,j+1])
-            console.log('pushed')
-            startPoint = startPoint[0]
-            return startPoint
-
-          } else if (right === 2) {
-            return startPoint
-            // console.log(startPoint)
+      for (var a=0; a < width-1; a++) { 
+        for (var b=0; b < height-1;b++) {
+          if (right === 0 || down === 0 && right || down < maze[i].length-1 && right || down < maze[j].length-1) {
+            return right, down
+            // console.log('r we here')
           } else {
-
-            // console.log('something else')
+            console.log('something else')
           }
         }
-          // return _this.solveMaze(startPoint, this.endPoint)
+        break;
       }
 
     },
@@ -121,12 +144,12 @@ export default {
         for (var j=0; j < mazeColumn.length; j++) {
           if (_this.arraysEqual([startPoint], [endPoint])) {
             console.log('maze solved');
-            break;
+
           } else {
             _this.movePoint(startPoint);
-            // console.log(startPoint)
+
             console.log('move()')
-            break;
+
           }
           // return this.movingPoint
         }
