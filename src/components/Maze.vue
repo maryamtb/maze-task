@@ -4,6 +4,7 @@
     <button @click="solveMaze(startPoint, endPoint)">Generate Maze</button> 
 
     <h3>width: {{width[0]}}, height: {{height[0]}}, startPoint: {{startPoint}} , endPoint: {{endPoint}}</h3>
+      {{startPoint}}
       <div class="maze">
         <table>
             <tr><td>{{ maze[0][0] }}</td><td>{{ maze[0][1] }}</td><td>{{ maze[0][2] }}</td><td>{{ maze[0][3] }}</td></tr>
@@ -24,100 +25,89 @@ export default {
     return {
       width: [4],
       height: [4],
-      size: [4].concat([4]),
-      // maze: [
-      //   [1,0,0,0],
-      //   [1,1,0,1],
-      //   [0,1,0,0],
-      //   [1,1,1,1]
-      // ],
+      // size: [4].concat([4]),
       maze: [
-        ['free','blocked','blocked','blocked'],
-        ['free','free','blocked','free'],
-        ['blocked','free','blocked','blocked'],
-        ['free','free','free','blocked']
+        [0,2,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,2]
       ],
-      movingPoint: [
-        [],[]
-      ],
-      startPoint: [
-        [0],[0]
-      ],
-      endPoint: [
-        [3],[3]
-      ],
-      movingPointList: [
-        [],[],
-        ]
+      // maze: [
+      //   ['free','blocked','blocked','blocked'],
+      //   ['free','free','blocked','free'],
+      //   ['blocked','free','blocked','blocked'],
+      //   ['free','free','free','blocked']
+      // ],
+      // movingPoint: [
+      //   [],[]
+      // ],
+      startPoint: 
+        [[0,0]]
+      ,
+      endPoint: 
+        [[3,3]]
+      ,
+      // movingPointList: [
+      //   [],[],
+      //   ]
     }
   },
   methods: {
 
-    getNeighbor() {
+
+    movePoint(startPoint) {
+
       let _this = this;
 
-      var i = 0
-      var j = 0
-      if (this.maze[i][j+1] === 'blocked' && this.maze[i]-1 < this.width && this.maze[j]-1 < this.height) { 
-        this.movingPoint = [i+1,j]
-
-        // this.movingPointList.push([this.movingPoint[0]],[this.movingPoint[1]])
-        // console.log(this.movingPointList)
-
-        return _this.solveMaze( [ this.movingPoint = [i+1,j] ] , [this.endPoint])
-        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
-
-      } else if (this.maze[i+1][j] === 'free' && this.maze[i]-1 < this.width && this.maze[j]-1 < this.height) { 
-        this.movingPoint = [i,j+1]
-        // this.movingPointList.push([this.movingPoint[0]],[this.movingPoint[1]])
-        
-        return _this.solveMaze( this.movingPoint[i,j+1] , [this.endPoint])
-        // _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
-
-      } else if (this.maze[i]-1 === this.width && this.maze[i-1][j] === 'free') {
-        this.movingPoint = [i-1,j]
-        // this.movingPointList.push([this.movingPoint[0]],[this.movingPoint[1]])
-
-        console.log('out of range x-axis')
-        return _this.solveMaze( this.movingPoint = [i-1,j] , [this.endPoint])
-        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
-
-      } else if (this.maze[i]-1 === this.height && this.maze[i][j-1] === 'free') {
-        this.movingPoint = [i,j-1]
-        // this.movingPointList.push([this.movingPoint[0]],[this.movingPoint[1]])
-        console.log('out of range y-axis')
-        
-        return _this.solveMaze( this.movingPoint = [i,j-1] , [this.endPoint])
-        // return _this.solveMaze( [ [this.movingPoint[0]],[this.movingPoint[1]] ]  , [this.endPoint])
-      } else if (this.maze[i][j] === this.movingPoint[i][j]) {
-        // console.log([this.movingPoint], [this.endPoint])
-        console.log('winner')
-        // _this.solveMaze( movingPoint  , [this.endPoint])
-      } else {
-          
-          // return _this.solveMaze({ startPoint: [ [this.movingPoint[0]],[this.movingPoint[1]] ] } , { endPoint: [this.endPoint]})
-          console.log('something else')
-      }
-
-    },
-
-    movePoint() {
-      // this.movingPoint = this.startPoint;
-      let _this = this;
-      // 0. check if on edge
       // 1. check adjacent value by calling getNeighbor()
       // 2. set this.movingPoint = 'free' location (from getNeighbor())
       // 3. call solveMaze() again
       // 4. once above is complete, create stackList() => lists all moved position into a 2d array + drawLine() => sets background color for that list to red
-      
-      _this.getNeighbor()
+      // if (this.movingPoint < this.width && this.movingPoint < this.height) {
 
+      _this.getNeighbor(startPoint)
+    
+    },
+
+    getNeighbor(startPoint) {
+        // let _this = this;
+
+      var i = 0
+      var j = 0
+      var width = this.width
+      var height = this.height 
+
+      var maze = this.maze
+      let right = maze[i][j+1]
+      // var down = maze[i][j+1]
+      // var left = maze[i][j-1]
+      // var up = maze[i-1][j]
+
+
+      for (i=0; i < width-1; i++) { 
+        for (j=0; j < height-1; j++) {
+          if (right === 0 && right < maze[i].length-1 && maze[j].length-1) {
+            startPoint = startPoint.push([i,j+1])
+            console.log('pushed')
+            startPoint = startPoint[0]
+            return startPoint
+
+          } else if (right === 2) {
+            return startPoint
+            // console.log(startPoint)
+          } else {
+
+            // console.log('something else')
+          }
+        }
+          // return _this.solveMaze(startPoint, this.endPoint)
+      }
 
     },
 
     arraysEqual([a], [b]) {
       if (a === b) return true;
-      if (a === '' || b === '' && a === null && b === null) return false;
+      if (a === '' || b === '' || a === null || b === null) return false;
       for (var i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) return false;
       }
@@ -126,23 +116,29 @@ export default {
 
     solveMaze(startPoint, endPoint) {
       let _this = this;
-      // startPoint = '';
       for (var i=0; i < this.maze.length; i++) {
         var mazeColumn = this.maze[i];
         for (var j=0; j < mazeColumn.length; j++) {
           if (_this.arraysEqual([startPoint], [endPoint])) {
             console.log('maze solved');
+            break;
           } else {
-            this.startPoint = startPoint
-
-            _this.movePoint();
+            _this.movePoint(startPoint);
+            // console.log(startPoint)
             console.log('move()')
+            break;
           }
-          return [this.movingPoint]
+          // return this.movingPoint
         }
       }
-    }
+    },
 
+    // generateMaze(height, width, startPoint, endPoint) {
+    //   height = this.height,
+    //   width = this.width,
+    //   startPoint = this.startPoint,
+    //   endPoint = this.endPoint
+    // }
 
   }
 }
