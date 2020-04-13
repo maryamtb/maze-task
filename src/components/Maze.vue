@@ -4,9 +4,8 @@
     <button @click="solveMaze(startPoint, endPoint)">Generate Maze</button> 
 
     <h3>width: {{width[0]}}, height: {{height[0]}}, startPoint: {{startPoint}} , endPoint: {{endPoint}}</h3>
-
       <div class="maze">
-
+        {{maze[0]}} <pre></pre> {{maze[1]}}<pre></pre> {{maze[2]}}<pre></pre> {{maze[3]}}
       </div>
   </div>
 </template>
@@ -63,7 +62,6 @@ export default {
       // 2. set this.movingPoint = 'free' location (from getNeighbor())
       // 3. call solveMaze() again
       // 4. once above is complete, create stackList() => lists all moved position into a 2d array + drawLine() => sets background color for that list to red
-
 
       switch (_this.getNeighbor(startPoint)) {
         case right:
@@ -169,20 +167,6 @@ export default {
   text-align: center;
   align-items: center;
 }
-table, td, th {
-  align-items: center;
-  padding: 20px 20px;
-  border: 1px solid black;
-}
-
-table {
-  border-collapse: collapse;
-  justify-content: center;
-  margin-left:auto; 
-  margin-right:auto;
-}
-
-
 
 h3 {
   margin: 40px 0 0;
