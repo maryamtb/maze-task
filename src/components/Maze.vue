@@ -5,7 +5,7 @@
 
     <h3>width: {{width[0]}}, height: {{height[0]}}, startPoint: {{startPoint}} , endPoint: {{endPoint}}</h3>
       <div class="maze">
-        {{maze[0]}} <pre></pre> {{maze[1]}}<pre></pre> {{maze[2]}}<pre></pre> {{maze[3]}}
+        {{maze[0]}} <pre /> {{maze[1]}} <pre /> {{maze[2]}} <pre /> {{maze[3]}}
       </div>
   </div>
 </template>
@@ -56,8 +56,7 @@ export default {
       var j = 0
       let right = this.maze[i][j+1]
       let down = this.maze[i+1][j]
-
-
+  
       // 1. check adjacent value by calling getNeighbor()
       // 2. set this.movingPoint = 'free' location (from getNeighbor())
       // 3. call solveMaze() again
