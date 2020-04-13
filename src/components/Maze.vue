@@ -4,14 +4,9 @@
     <button @click="solveMaze(startPoint, endPoint)">Generate Maze</button> 
 
     <h3>width: {{width[0]}}, height: {{height[0]}}, startPoint: {{startPoint}} , endPoint: {{endPoint}}</h3>
-      {{startPoint}}
+
       <div class="maze">
-        <table>
-            <tr><td>{{ maze[0][0] }}</td><td>{{ maze[0][1] }}</td><td>{{ maze[0][2] }}</td><td>{{ maze[0][3] }}</td></tr>
-            <tr><td>{{ maze[1][0] }}</td><td>{{ maze[1][1] }}</td><td>{{ maze[1][2] }}</td><td>{{ maze[1][3] }}</td></tr>
-            <tr><td>{{ maze[2][0] }}</td><td>{{ maze[2][1] }}</td><td>{{ maze[2][2] }}</td><td>{{ maze[2][3] }}</td></tr>
-            <tr><td>{{ maze[3][0] }}</td><td>{{ maze[3][1] }}</td><td>{{ maze[3][2] }}</td><td>{{ maze[3][3] }}</td></tr>
-        </table>
+
       </div>
   </div>
 </template>
@@ -27,10 +22,10 @@ export default {
       height: [4],
       // size: [4].concat([4]),
       maze: [
-        [0,0,2,0],
-        [0,0,0,0],
-        [2,2,0,0],
-        [0,2,0,2]
+        [0,1,1,1],
+        [0,0,1,0],
+        [1,0,1,1],
+        [0,0,0,1]
       ],
       // maze: [
       //   ['free','blocked','blocked','blocked'],
